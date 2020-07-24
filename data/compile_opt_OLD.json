@@ -1,0 +1,17 @@
+{
+	"language": "Solidity",
+	"sources": {
+		"CertificateStore.sol": {
+			"content": "<added automatically>"
+		}
+	},
+	"settings": {
+		"outputSelection": {
+			"*": {
+				"*": [
+					"metadata", "evm.bytecode", "evm.bytecode.sourceMap"
+				]
+			}
+		}
+	}
+}

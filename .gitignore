@@ -1,0 +1,14 @@
+node_modules/*
+package*
+*__pycache__*
+*/tests/__pycache__/*
+build/*
+*.DS_Store*
+.vscode
+*config*
+venv/*
+dist/*
+blockcertsonchaining.egg-info/*
+build/*
+.log
+pk

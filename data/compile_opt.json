@@ -1,0 +1,17 @@
+{
+	"language": "Solidity",
+	"sources": {
+		"ResearchCertificate.sol": {
+			"content": "<added automatically>"
+		}
+	},
+	"settings": {
+		"outputSelection": {
+			"*": {
+				"*": [
+					"metadata", "evm.bytecode", "evm.bytecode.sourceMap"
+				]
+			}
+		}
+	}
+}
