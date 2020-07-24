@@ -12,3 +12,4 @@ blockcertsonchaining.egg-info/*
 build/*
 .log
 pk
+conf_eth.ini
