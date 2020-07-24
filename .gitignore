@@ -11,5 +11,5 @@ dist/*
 blockcertsonchaining.egg-info/*
 build/*
 .log
-pk
-conf_eth.ini
+.pk
+.conf_eth.ini
