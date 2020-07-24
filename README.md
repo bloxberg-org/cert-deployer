@@ -51,7 +51,7 @@ your wallet has access to a sufficient amount of ether any time.
 ### Configuring cert-deployer
 
 The last step to be executed is completing the configuration inputs (optional:
-adjusting the smart contract). The conf_eth.ini file includes the following parameters:
+adjusting the smart contract). The conf_template.ini file includes the following parameters:
 
 ```
 deploying_address = <Your Ethereum address>
@@ -75,6 +75,8 @@ accidental overwriting.
 1. The cert-deployer uses a separate class to access the wallet's private key which
 should be stored under the path provided. Ideally, that location is not permanently
 accessible (e.g. USB stick) improving security.
+
+Rename the conf_template.ini to conf_eth.ini once filled with your parameters
 
 ### Long story short
 
