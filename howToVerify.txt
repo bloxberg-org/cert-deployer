@@ -1,0 +1,4 @@
+use truffle-flattener
+set EVM version to Istanbul
+set compiler versoin to 0.6.4
+Optimization should be set to false

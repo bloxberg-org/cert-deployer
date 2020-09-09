@@ -22,9 +22,9 @@ contract ResearchCertificate is ERC721Full, Ownable {
         return newItemId;
     }
 
-    function updateTokenURI(string memory tokenURI) onlyOwner public returns (string memory) { 
-	uint256 currentTokenId = _tokenIds.current();
-	_setTokenURI(currentTokenId, tokenURI);
+    function updateTokenURI(uint256 tokenID, string memory tokenURI) onlyOwner public returns (string memory) { 
+
+	_setTokenURI(tokenID, tokenURI);
 	
 	return tokenURI;
     }
