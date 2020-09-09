@@ -8,7 +8,7 @@ contract ResearchCertificate is ERC721Full, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721Full("DigitalLabs", "SARI") public {
+    constructor() ERC721Full("ResearchObjectCertification", "ROC") public {
     }
 
     function createCertificate(address recipient, string memory tokenURI, string memory tokenHash) onlyOwner public returns (uint256) {
@@ -25,7 +25,6 @@ contract ResearchCertificate is ERC721Full, Ownable {
     function updateTokenURI(uint256 tokenID, string memory tokenURI) onlyOwner public returns (string memory) { 
 
 	_setTokenURI(tokenID, tokenURI);
-	
 	return tokenURI;
     }
 }
