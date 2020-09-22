@@ -5,6 +5,7 @@ package*
 build/*
 *.DS_Store*
 .vscode
+truffle-config.js
 venv/*
 dist/*
 blockcertsonchaining.egg-info/*
