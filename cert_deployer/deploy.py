@@ -1,7 +1,7 @@
 import json
 import logging
 import config
-
+import re
 from solcx import get_solc_version, set_solc_version, compile_standard, compile_files, install_solc, compile_source
 #from solc import compile_standard, compile_files
 from ens import ENS
@@ -42,6 +42,7 @@ class ContractDeployer(object):
         self._security_check()
         self._compile_contract()
         self._deploy()
+        self._assign_name()
         self._assign_ens()
 
     def _security_check(self):
@@ -101,6 +102,26 @@ class ContractDeployer(object):
         self.contr_address = tx_receipt.contractAddress
 
         logging.info("Deployed the contract at address %s,  using the following amount of gas: %s", self.contr_address, tx_receipt.gasUsed)
+        
+    def _assign_name(self):
+    
+        # prepare domain
+        
+
+        url = self.app_config.ens_name
+        url = re.sub('\.berg$', '', url)
+        
+        
+        labelhash = self._w3.sha3(text=url);
+        ens_registrar = ContractConnection("ens_registrar", self.app_config)
+        print(ens_registrar)
+ 
+	# set subdomain
+        tx_hash = ens_registrar.functions.transact("register", labelhash, self.app_config.deploying_address)
+        print(tx_hash)
+        
+
+        
 
     def _assign_ens(self):
         '''
@@ -114,6 +135,7 @@ class ContractDeployer(object):
         ens_registry = ContractConnection("ens_registry", self.app_config)
         ens_resolver = ContractConnection("ens_resolver", self.app_config)
 
+        
         # set resolver
         curr_resolver = ens_registry.functions.call("resolver", node)
         if curr_resolver == "0x0000000000000000000000000000000000000000":
@@ -135,7 +157,7 @@ class ContractDeployer(object):
         name = ens_resolver.functions.call("name", node)
 
         logging.info("SUCCESS – Set contract with address %s to name %s", addr, name)
-
+        
 
 if __name__ == '__main__':
     '''

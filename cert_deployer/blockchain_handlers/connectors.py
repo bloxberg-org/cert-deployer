@@ -18,8 +18,9 @@ ENS_CONTRACTS = {
         'ens_resolver': '0x42D63ae25990889E35F215bC95884039Ba354115'
         },
     'bloxberg': {
-	'ens_registry': '0xde68Fcf6814D81Ee910bf35703622571718E07a7',
-        'ens_resolver': '0xAd8587D7ad2D9F27dd75E8e36Faecf675F523DFA'
+	'ens_registry': '0xb9F5cd1e334aCEd748bA1422b8a08c548ddBc73D',
+        'ens_resolver': '0x56D608448b20DB47559b3aD76ef18c5Bdac4d50D',
+        'ens_registrar': '0x1C242FE4Dc151aB4e5932fc82e50c9a8E749ebEF'
 	}
     }
 
