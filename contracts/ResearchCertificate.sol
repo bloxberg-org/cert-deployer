@@ -1,8 +1,8 @@
 pragma solidity ^0.6.0;
 
-import "/home/james/bloxberg-certs/cert-deployer/contracts/ERC721Full.sol";
-import "/home/james/bloxberg-certs/cert-deployer/contracts/Counters.sol";
-import "/home/james/bloxberg-certs/cert-deployer/contracts/Ownable.sol";
+import "contracts/ERC721Full.sol";
+import "contracts/Counters.sol";
+import "contracts/Ownable.sol";
 
 contract ResearchCertificate is ERC721Full, Ownable {
     using Counters for Counters.Counter;
