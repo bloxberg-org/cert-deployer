@@ -85,7 +85,7 @@ Execute these instructions step-by-step:
 1. clone github repo `$ git clone https://github.com/BlockcertsSmartContract/cert-deployer.git`
 1. install dependencies within virtualenv `$ python setup.py install`
 1. add required information incl. paths and connection data into conf_eth.ini
-1. deploy smart contract `$ python deploy.py`
+1. deploy smart contract `$ python cert_deployer/deploy.py`
 
 ... install the forked cert-issuer- (and cert-verifier) repositories for benefitting
 from the whole framework (links above).
