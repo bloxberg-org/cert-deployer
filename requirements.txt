@@ -31,6 +31,7 @@ py-multibase==1.0.1       # via py-cid
 py-multicodec==0.2.1      # via content-hash, py-cid
 py-multihash==0.2.3       # via content-hash, py-cid
 py-solc==3.2.0
+py-solc-x==0.7.2
 pycryptodome==3.9.4       # via eth-hash, eth-keyfile
 pyrsistent==0.15.7        # via jsonschema
 pysha3==1.0.2
