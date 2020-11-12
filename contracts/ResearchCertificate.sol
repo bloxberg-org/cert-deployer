@@ -1,8 +1,8 @@
 pragma solidity ^0.6.0;
 
-import "contracts/ERC721Full.sol";
-import "contracts/Counters.sol";
-import "contracts/Ownable.sol";
+import "./ERC721Full.sol";
+import "./Counters.sol";
+import "./Ownable.sol";
 
 contract ResearchCertificate is ERC721Full, Ownable {
     using Counters for Counters.Counter;

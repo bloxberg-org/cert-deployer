@@ -8,7 +8,8 @@ from ens import ENS
 from blockchain_handlers.connectors import MakeW3, ContractConnection
 import blockchain_handlers.signer as signer
 import blockchain_handlers.path_tools as tools
-
+from unfolder.main import unfold_imports
+import requests
 
 class ContractDeployer(object):
     '''
@@ -44,6 +45,7 @@ class ContractDeployer(object):
         self._deploy()
         self._assign_name()
         self._assign_ens()
+        self._verify_contract()
 
     def _security_check(self):
         '''
@@ -68,14 +70,15 @@ class ContractDeployer(object):
         # loading contract file data
         with open(tools.get_contr_path(), "r") as source_file:
             source_raw = source_file.read()
- 
+
         # loading configuration data
         with open(tools.get_compile_data_path()) as opt_file:
             raw_opt = opt_file.read()
             opt = json.loads(raw_opt)
         #opt["sources"]["ResearchCertificate.sol"]["content"] = source_raw
-        compiled_sol = compile_source(source_raw)
-        contract_interface = compiled_sol['<stdin>:' + 'ResearchCertificate']
+        #compiled_sol = compile_source(source_raw)
+        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"])
+        contract_interface = compiled_sol[tools.get_contr_path() + ":ResearchCertificate"]
         self.bytecode = contract_interface['bin']
         self.abi = contract_interface['abi']
 
@@ -116,12 +119,31 @@ class ContractDeployer(object):
         ens_registrar = ContractConnection("ens_registrar", self.app_config)
         print(ens_registrar)
  
-	# set subdomain
+        # set subdomain
         tx_hash = ens_registrar.functions.transact("register", labelhash, self.app_config.deploying_address)
         print(tx_hash)
-        
 
-        
+    def _verify_contract(self):
+        '''
+        Verifies contract by compiling source code and comparing bytecode with the one on the blockchain
+        '''
+        # flatten
+        prefix = "pragma solidity ^0.6.2;\n"
+        flattened = prefix + unfold_imports([], tools.get_contr_path())
+
+        # call bloxberg api with compile options
+        base_url = "https://blockexplorer.bloxberg.org/api/api?module=contract&action=verify"
+        req_content = {'addressHash': str(self.contr_address), 'name': 'ResearchCertificate', 'compilerVersion': '0.6.2+commit.bacdbe57', 'optimization': 'false', 'contractSourceCode': flattened}
+        logging.info(req_content)
+        logging.info("Verifying deployed contract...")
+        response = requests.post(base_url, data = req_content)
+        response_json = json.loads(response.text)
+        # keep in mind: an address can be verified only once!
+        if response_json['status'] == '1':
+            logging.info("Verification of contract " + str(self.contr_address) + " successully completed")
+        else:
+            logging.error("Verification of contract " + str(self.contr_address) + " failed with message: " + response_json['message'])
+
 
     def _assign_ens(self):
         '''
