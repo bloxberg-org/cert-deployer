@@ -31,6 +31,9 @@ def add_arguments(p):
     p.add_argument('--overwrite_ens_link', default=False, type=bool, help='Should the address link be changed?', env_var='CHANGE_ENS_LINK')
     p.add_argument('--chain', required=True, default='bloxberg',
                    help=('Which chain to use. Default is bloxberg'), env_var='CHAIN')
+    p.add_argument('--compiler_version', default='0.6.2', help='Solidity compiler version to use', env_var='COMPILER_VERSION')
+    p.add_argument('--compiler_version_long', default='v0.6.2+commit.bacdbe57', help='Solidity compiler version to use (in long form)', env_var='COMPILER_VERSION_LONG')
+
 
 def get_config():
 

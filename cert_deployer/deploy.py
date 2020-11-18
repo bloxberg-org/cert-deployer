@@ -62,8 +62,8 @@ class ContractDeployer(object):
             exit("Stopping process.")
 
     def _compile_contract(self):
-        install_solc('v0.6.2')
-        set_solc_version('v0.6.2')
+        install_solc("v" + self.app_config.compiler_version)
+        set_solc_version("v" + self.app_config.compiler_version)
         '''
         Compiles smart contract, creates bytecode and abi
         '''
@@ -77,7 +77,7 @@ class ContractDeployer(object):
             opt = json.loads(raw_opt)
         #opt["sources"]["ResearchCertificate.sol"]["content"] = source_raw
         #compiled_sol = compile_source(source_raw)
-        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"], solc_version="v0.6.2")
+        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"], solc_version="v" + self.app_config.compiler_version)
         contract_interface = compiled_sol[tools.get_contr_path() + ":ResearchCertificate"]
         self.bytecode = contract_interface['bin']
         self.abi = contract_interface['abi']
@@ -128,12 +128,12 @@ class ContractDeployer(object):
         Verifies contract by compiling source code and comparing bytecode with the one on the blockchain
         '''
         # flatten
-        prefix = "pragma solidity ^0.6.2;\n"
+        prefix = "pragma solidity ^" + self.app_config.compiler_version + ";\n"
         flattened = prefix + unfold_imports([], tools.get_contr_path())
 
         # call bloxberg api with compile options
         base_url = "https://blockexplorer.bloxberg.org/api/api?module=contract&action=verify"
-        req_content = {'addressHash': str(self.contr_address), 'name': 'ResearchCertificate', 'compilerVersion': 'v0.6.2+commit.bacdbe57', 'optimization': 'false', 'contractSourceCode': flattened}
+        req_content = {'addressHash': str(self.contr_address), 'name': 'ResearchCertificate', 'compilerVersion': self.app_config.compiler_version_long, 'optimization': 'false', 'contractSourceCode': flattened}
         logging.info("Verifying deployed contract...")
         response = requests.post(base_url, data = req_content)
         response_json = json.loads(response.text)
