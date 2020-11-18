@@ -77,7 +77,7 @@ class ContractDeployer(object):
             opt = json.loads(raw_opt)
         #opt["sources"]["ResearchCertificate.sol"]["content"] = source_raw
         #compiled_sol = compile_source(source_raw)
-        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"], solc_version="0.6.2")
+        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"], solc_version="v0.6.2")
         contract_interface = compiled_sol[tools.get_contr_path() + ":ResearchCertificate"]
         self.bytecode = contract_interface['bin']
         self.abi = contract_interface['abi']
@@ -133,7 +133,7 @@ class ContractDeployer(object):
 
         # call bloxberg api with compile options
         base_url = "https://blockexplorer.bloxberg.org/api/api?module=contract&action=verify"
-        req_content = {'addressHash': str(self.contr_address), 'name': 'ResearchCertificate', 'compilerVersion': '0.6.2+commit.bacdbe57', 'optimization': 'false', 'contractSourceCode': flattened}
+        req_content = {'addressHash': str(self.contr_address), 'name': 'ResearchCertificate', 'compilerVersion': 'v0.6.2+commit.bacdbe57', 'optimization': 'false', 'contractSourceCode': flattened}
         logging.info("Verifying deployed contract...")
         response = requests.post(base_url, data = req_content)
         response_json = json.loads(response.text)
