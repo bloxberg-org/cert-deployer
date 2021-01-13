@@ -1,24 +1,16 @@
 # cert-deployer
 
 This project deploys smart contracts to the Ethereum blockchain enabling the
-cert-issuer to modify a certificates' or certificate batches' status respectively,
-i.e. to issue or revoke, and the cert-verifier to get that status in order to verify
-its validity.
+cert-issuer to modify a certificates' or certificate batches' status respectively.
 
-The related forked repositories of the original cert-issuer and cert-verifier are linked
+The related forked repositories of the original cert-issuer and cert-tools are linked
 below.
 
-https://github.com/BlockcertsSmartContract/cert-issuer
+https://github.com/bloxberg-org/cert-issuer
 
-https://github.com/BlockcertsSmartContract/cert-verifier
+https://github.com/bloxberg-org/cert-tools
 
 ## How deploying smart contract works
-
-Potential issuers find our suggested sample contract in the data directory which
-gets, first, compiled from source and, second, deployed afterwards. This contracts is, again,
-just a suggestion and can of course be modified without limiting the codes functionality
-– adequate modifications implied (note that some adjustments of the cert-issuer and verifier
- may be required as a consequence).
 
 After deploying the contract, the cert-deployer links the contract to the potential
 issuer's ENS domain – more specific sets the contract's address as the ENS entry's
@@ -43,10 +35,7 @@ All necessary dependencies will be installed afterwards. Further required are al
 the setups of an Ethereum wallet (the wallet has to be registered in the Ethereum
 chain that being intended to be used later) and an according ENS domain.
 
-Our recommended tool for creating and managing the wallet is [Metamask](https://metamask.io)
-which is, used as its chrome extension, an at least very viable option for an
-efficient ENS name registration using the [web application](https://app.ens.domains/). Please make sure that
-your wallet has access to a sufficient amount of ether any time.
+Our recommended tool for creating and managing the wallet is [Metamask](https://metamask.io).
 
 ### Configuring cert-deployer
 
@@ -78,45 +67,15 @@ accessible (e.g. USB stick) improving security.
 
 Rename the conf_template.ini to conf_eth.ini once filled with your parameters
 
-### Long story short
+### Quick steps
 
 Execute these instructions step-by-step:
 1. ensure you have installed [solidity compiler (solc)](https://solidity.readthedocs.io/en/v0.5.3/installing-solidity.html)
-1. clone github repo `$ git clone https://github.com/BlockcertsSmartContract/cert-deployer.git`
+1. clone github repo `$ git clone https://github.com/bloxberg-org/cert-deployer.git`
 1. install dependencies within virtualenv `$ python setup.py install`
 1. add required information incl. paths and connection data into conf_eth.ini
 1. deploy smart contract `$ python cert_deployer/deploy.py`
 
-... install the forked cert-issuer- (and cert-verifier) repositories for benefitting
+... install the forked cert-issuer- (and cert-tools) repositories for benefitting
 from the whole framework (links above).
 
-## Why use cert-deployer
-
-While it is possible to deploy batches to the Ethereum blockchain separately, it
-is impossible to modify associated information as e.g. attributes, since the data,
-once deployed,is immutable by nature. As certificates could be revoked eventually,
-[BlockCerts](https://github.com/blockchain-certificates) has addressed this issue
-with external server provided revocation lists. Unfortunately, the cert-verifier's
-functionality is, as a consequence, limited by either temporal or permanent offline
-times of these servers. Due to its resulting inability distinguishing between valid
-and invalid certificates this design destroys especially the processes availability
-guarantee naturally coming with the use of blockchains.
-
-In order to restore i.a. the availability guarantee over the entire certificates'
-lifetime, we provide an extension of the existing Blockcerts implementation that
-issues and revokes certificates using a smart contracts mapping ability, thus making
-a certificates' (or batches') status editable after being deployed (excl. for the
-issuer).
-
-Another similar issue is the original identity management including the publication
-of issuer identities (public keys) on external servers. This is mostly disadvantageous
-in case of a permanent server shutdown requiring the public key to have become public
-knowledge in the meantime. Otherwise, all future verifications of associated certificates
-would become impossible. The usage of the Ethereum name service constitutes an
-efficient option solving that problem, since the according assertion of a public
-key and ENS domain could be e.g. stored within the contract itself so that this
-information does not get lost over time.
-
-In conclusion, using the cert-deployer, paired with the cert-issuer and -verifier
-linked above, the natural blockchain guarantees are restored by moving the revocation
-and identity administration to the blockchain – i.e. to a smart contract.
