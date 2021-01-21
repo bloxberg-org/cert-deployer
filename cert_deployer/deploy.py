@@ -77,7 +77,7 @@ class ContractDeployer(object):
             opt = json.loads(raw_opt)
         #opt["sources"]["ResearchCertificate.sol"]["content"] = source_raw
         #compiled_sol = compile_source(source_raw)
-        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"], solc_version="v" + self.app_config.compiler_version)
+        compiled_sol = compile_files([tools.get_contr_path()], output_values=["abi", "bin"])
         contract_interface = compiled_sol[tools.get_contr_path() + ":ResearchCertificate"]
         self.bytecode = contract_interface['bin']
         self.abi = contract_interface['abi']
